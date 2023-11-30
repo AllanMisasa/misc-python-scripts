@@ -1,19 +1,18 @@
-# $ pip install pytube
+'''
+This script is used to download videos from YouTube
+'''
 
+import sys
 import pytube
 from pytube.cli import on_progress
-import sys
 
-url = "https://www.youtube.com/watch?v=yU4jHoWLGCk"
-
-def download_video(url):
+def download_video(url, res='1440p'):
+    '''Download a video from YouTube'''
     try:
-        yt = pytube.YouTube(url, on_progress_callback=on_progress, use_oauth=True,
+        yt = pytube.YouTube(url=url, on_progress_callback=on_progress, use_oauth=True,
         allow_oauth_cache=True)
         print("Trying to download " + yt.title)
-        #print(yt.check_availability())
-        video = yt.streams.filter(progressive=True).get_highest_resolution()
-        #video = yt.streams.get_highest_resolution()
+        video = yt.streams.filter(res=res).first()
         print("Downloading...")
         video.download()
         print("Download complete")
@@ -21,4 +20,5 @@ def download_video(url):
         print("Error in download_video")
         sys.exit(1)
 
-download_video(url)
+url = "https://www.youtube.com/watch?v=FfcIKP2bscQ"
+download_video(url, '1080p')
