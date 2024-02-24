@@ -16,6 +16,7 @@ def download_video(url, resolution):
         print("Downloading...", video)
         video.download()
         print("Download complete")
+        return yt.title
     except:
         print("Error in download_video")
         sys.exit(1)
@@ -42,7 +43,7 @@ def combine_audio_video(video, audio, output="output.mp4"):
         print("Error in combine_audio_video")
         sys.exit(1) 
 
-url = "https://www.youtube.com/watch?v=dxYY097QNs0"
-download_video(url, resolution="1080p")
+url = "https://www.youtube.com/watch?v=0cj3gzcld3E"
+name = download_video(url, resolution="360p")
 download_audio(url)
-combine_audio_video("LoRa CHIRP.mp4", "LoRa CHIRP.webm", "lora.mp4")
+combine_audio_video(name+".mp4", name+".webm", name+"_f.mp4")
