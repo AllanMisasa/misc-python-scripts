@@ -43,7 +43,14 @@ def combine_audio_video(video, audio, output="output.mp4"):
         print("Error in combine_audio_video")
         sys.exit(1) 
 
-url = "https://www.youtube.com/watch?v=0cj3gzcld3E"
-name = download_video(url, resolution="360p")
+base_path="/home/janus/Documents/GitHub/misc-python-scripts/"
+url = "https://www.youtube.com/watch?v=iaJVP67iU1Y"
+name = download_video(url, resolution="1080p")
+video_path = name.replace("|", "").replace(":", "").replace("*", "").replace(".", "").replace(",", "")
+#video_path = video_path.replace(":", "")
+#video_path = video_path.replace("*", "")
+#video_path = video_path.replace(".", "")
+#video_path = video_path.replace(",", "")
+path = base_path + video_path
 download_audio(url)
-combine_audio_video(name+".mp4", name+".webm", name+"_f.mp4")
+combine_audio_video(path+".mp4", path+".webm", path+"_f.mp4")
