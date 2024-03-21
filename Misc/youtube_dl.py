@@ -8,7 +8,6 @@ import pytube
 from pytube.cli import on_progress
 
 def download_video(url, resolution):
-    '''Download a video from YouTube'''
     try:
         yt = pytube.YouTube(url=url, on_progress_callback=on_progress, use_oauth=True, allow_oauth_cache=True)
         print("Trying to download " + yt.title)
@@ -47,10 +46,6 @@ base_path="/home/janus/Documents/GitHub/misc-python-scripts/"
 url = "https://www.youtube.com/watch?v=iaJVP67iU1Y"
 name = download_video(url, resolution="1080p")
 video_path = name.replace("|", "").replace(":", "").replace("*", "").replace(".", "").replace(",", "")
-#video_path = video_path.replace(":", "")
-#video_path = video_path.replace("*", "")
-#video_path = video_path.replace(".", "")
-#video_path = video_path.replace(",", "")
 path = base_path + video_path
 download_audio(url)
 combine_audio_video(path+".mp4", path+".webm", path+"_f.mp4")
