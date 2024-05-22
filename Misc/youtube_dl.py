@@ -9,7 +9,7 @@ from pytube.cli import on_progress
 
 def download_video(url, resolution):
     try:
-        yt = pytube.YouTube(url=url, on_progress_callback=on_progress, use_oauth=True, allow_oauth_cache=True)
+        yt = pytube.YouTube(url=url, on_progress_callback=on_progress, use_oauth=False, allow_oauth_cache=False)
         print("Trying to download " + yt.title)
         video = yt.streams.filter(res=resolution).first()
         print("Downloading...", video)
@@ -43,9 +43,9 @@ def combine_audio_video(video, audio, output="output.mp4"):
         sys.exit(1) 
 
 base_path="/home/janus/Documents/GitHub/misc-python-scripts/"
-url = "https://www.youtube.com/watch?v=iaJVP67iU1Y"
-name = download_video(url, resolution="1080p")
-video_path = name.replace("|", "").replace(":", "").replace("*", "").replace(".", "").replace(",", "")
-path = base_path + video_path
+url = "https://www.youtube.com/watch?v=_-ywSPWu3K8"
+#name = download_video(url, resolution="1080p")
+#video_path = name.replace("|", "").replace(":", "").replace("*", "").replace(".", "").replace(",", "")
+#path = base_path + video_path
 download_audio(url)
-combine_audio_video(path+".mp4", path+".webm", path+"_f.mp4")
+#combine_audio_video(path+".mp4", path+".webm", path+"_f.mp4")
