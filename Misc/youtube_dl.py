@@ -9,15 +9,15 @@ from pytube.cli import on_progress
 
 def download_video(url, resolution):
     try:
-        yt = pytube.YouTube(url=url, on_progress_callback=on_progress, use_oauth=False, allow_oauth_cache=False)
+        yt = pytube.YouTube(url=url, on_progress_callback=on_progress, use_oauth=True, allow_oauth_cache=True)
         print("Trying to download " + yt.title)
-        video = yt.streams.filter(res=resolution).first()
+        video = yt.streams.filter(only_video=True, res=resolution).order_by('resolution').desc().first()
         print("Downloading...", video)
         video.download()
         print("Download complete")
         return yt.title
-    except:
-        print("Error in download_video")
+    except Exception as e:
+        print("Error in download_video", e)
         sys.exit(1)
 
 def download_audio(url):
@@ -29,8 +29,8 @@ def download_audio(url):
         print("Downloading...", audio)
         audio.download()
         print("Download complete")
-    except:
-        print("Error in download_audio")
+    except Exception as e:
+        print("Error in download_audio", e)
         sys.exit(1)
 
 def combine_audio_video(video, audio, output="output.mp4"):
@@ -38,14 +38,14 @@ def combine_audio_video(video, audio, output="output.mp4"):
         video = ffmpeg.input(video)
         audio = ffmpeg.input(audio)
         ffmpeg.output(video, audio, output).run()
-    except:
-        print("Error in combine_audio_video")
+    except Exception as e:
+        print("Error in combine_audio_video", e)
         sys.exit(1) 
 
-base_path="/home/janus/Documents/GitHub/misc-python-scripts/"
-url = "https://www.youtube.com/watch?v=_-ywSPWu3K8"
-#name = download_video(url, resolution="1080p")
-#video_path = name.replace("|", "").replace(":", "").replace("*", "").replace(".", "").replace(",", "")
-#path = base_path + video_path
+base_path="/home/janus/repos/misc-python-scripts/"
+url = "https://www.youtube.com/watch?v=j6f8MrpCz34"
+name = download_video(url, resolution="1440p")
+video_path = name.replace("|", "").replace(":", "").replace("*", "").replace(".", "").replace(",", "")
+path = base_path + video_path
 download_audio(url)
-#combine_audio_video(path+".mp4", path+".webm", path+"_f.mp4")
+combine_audio_video(path+".mp4", path+".webm", path+"_f.mp4")
